@@ -1,0 +1,63 @@
+msgid ""
+msgstr ""
+"Language: ja-jp\n"
+
+msgid "locale:ja-jp"
+msgstr "日本語"
+
+msgid "bone"
+msgstr "ボーン"
+
+msgid "renderer"
+msgstr "レンダラー"
+
+msgid "weight"
+msgstr "ウェイト"
+
+msgid "volume-position"
+msgstr "位置"
+
+msgid "volume-radius"
+msgstr "半径"
+
+msgid "volume-hardness"
+msgstr "硬度"
+
+msgid "volume-strength"
+msgstr "強度"
+
+msgid "volume-weight"
+msgstr "ウェイト"
+
+msgid "volume-edit"
+msgstr "編集"
+
+msgid "mask-slot"
+msgstr "マテリアルスロット"
+
+msgid "mask-mask"
+msgstr "マスクテクスチャー"
+
+msgid "mask-weight"
+msgstr "ウェイト"
+
+msgid "mask-create"
+msgstr "作成"
+
+msgid "mask-edit"
+msgstr "編集"
+
+msgid "mask-texture-editor-dialog-title"
+msgstr "情報"
+
+msgid "mask-texture-editor-dialog-message"
+msgstr "マスクテクスチャエディターがインストールされていません。"
+
+msgid "mask-texture-editor-dialog-open-vcc"
+msgstr "VCC/ALCOM を開く"
+
+msgid "mask-texture-editor-dialog-open-web"
+msgstr "GitHub を開く"
+
+msgid "mask-texture-editor-dialog-cancel"
+msgstr "キャンセル"

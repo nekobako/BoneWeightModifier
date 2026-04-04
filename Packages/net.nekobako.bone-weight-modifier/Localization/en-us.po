@@ -1,0 +1,63 @@
+msgid ""
+msgstr ""
+"Language: en-us\n"
+
+msgid "locale:en-us"
+msgstr "English"
+
+msgid "bone"
+msgstr "Bone"
+
+msgid "renderer"
+msgstr "Renderer"
+
+msgid "weight"
+msgstr "Weight"
+
+msgid "volume-position"
+msgstr "Position"
+
+msgid "volume-radius"
+msgstr "Radius"
+
+msgid "volume-hardness"
+msgstr "Hardness"
+
+msgid "volume-strength"
+msgstr "Strength"
+
+msgid "volume-weight"
+msgstr "Weight"
+
+msgid "volume-edit"
+msgstr "Edit"
+
+msgid "mask-slot"
+msgstr "Material Slot"
+
+msgid "mask-mask"
+msgstr "Mask Texture"
+
+msgid "mask-weight"
+msgstr "ウェイト"
+
+msgid "mask-create"
+msgstr "Create"
+
+msgid "mask-edit"
+msgstr "Edit"
+
+msgid "mask-texture-editor-dialog-title"
+msgstr "Info"
+
+msgid "mask-texture-editor-dialog-message"
+msgstr "Mask Texture Editor is not installed."
+
+msgid "mask-texture-editor-dialog-open-vcc"
+msgstr "Open VCC/ALCOM"
+
+msgid "mask-texture-editor-dialog-open-web"
+msgstr "Open GitHub"
+
+msgid "mask-texture-editor-dialog-cancel"
+msgstr "Cancel"

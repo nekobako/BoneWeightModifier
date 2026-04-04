@@ -1,7 +1,13 @@
 {
     "name": "net.nekobako.BoneWeightModifier.Editor",
     "rootNamespace": "",
-    "references": [],
+    "references": [
+        "Unity.Collections",
+        "nadena.dev.ndmf",
+        "net.nekobako.MaskTextureEditor.Editor",
+        "net.nekobako.BoneWeightModifier.Runtime",
+        "net.nekobako.BoneWeightModifier.Localization"
+    ],
     "includePlatforms": [
         "Editor"
     ],
@@ -11,6 +17,12 @@
     "precompiledReferences": [],
     "autoReferenced": false,
     "defineConstraints": [],
-    "versionDefines": [],
+    "versionDefines": [
+        {
+            "name": "net.nekobako.mask-texture-editor",
+            "expression": "[1,2)",
+            "define": "BWM_MASK_TEXTURE_EDITOR"
+        }
+    ],
     "noEngineReferences": false
 }
