@@ -39,7 +39,7 @@ msgid "mask-mask"
 msgstr "Mask Texture"
 
 msgid "mask-weight"
-msgstr "ウェイト"
+msgstr "Weight"
 
 msgid "mask-create"
 msgstr "Create"
