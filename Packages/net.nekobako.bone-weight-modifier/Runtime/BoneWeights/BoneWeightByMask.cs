@@ -13,7 +13,7 @@ namespace net.nekobako.BoneWeightModifier.Runtime
         [SerializeField, NotKeyable]
         public Texture2D Mask = null;
 
-        [SerializeField, NotKeyable]
+        [SerializeField, NotKeyable, Range(0.0f, 1.0f)]
         public float Weight = 1.0f;
 
         public IBoneWeight Clone()
