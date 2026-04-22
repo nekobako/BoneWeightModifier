@@ -14,10 +14,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Removed
 
 ### Fixed
-- BoneWeightByMask.Weight was not being clamped.
-- BoneWeightByMask.Weight was not being localized.
 
 ### Security
+
+## [1.0.1] - 2026-04-22
+### Fixed
+- BoneWeightByMask.Weight was not being clamped.
+- BoneWeightByMask.Weight was not being localized.
 
 ## [1.0.0] - 2026-04-22
 ### Added
