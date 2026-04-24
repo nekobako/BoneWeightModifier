@@ -56,6 +56,10 @@ export const main =
             text: "Soft, Squishy Cheeks",
             link: "/tutorials/soft-squishy-cheeks",
           },
+          {
+            text: "Separate Accessories",
+            link: "/tutorials/separate-accessories",
+          },
         ],
       },
       {

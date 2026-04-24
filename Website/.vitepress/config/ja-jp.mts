@@ -56,6 +56,10 @@ export const main =
             text: "もちもちのほっぺ",
             link: "/ja-jp/tutorials/soft-squishy-cheeks",
           },
+          {
+            text: "アクセサリの分離",
+            link: "/ja-jp/tutorials/separate-accessories",
+          },
         ],
       },
       {

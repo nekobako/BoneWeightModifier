@@ -25,4 +25,8 @@ features:
     title: "もちもちのほっぺ"
     link: "./tutorials/soft-squishy-cheeks"
     details: "ほっぺをもちもちにする"
+  - icon: "💎"
+    title: "アクセサリの分離"
+    link: "./tutorials/separate-accessories"
+    details: "アクセサリを分離する"
 ---
