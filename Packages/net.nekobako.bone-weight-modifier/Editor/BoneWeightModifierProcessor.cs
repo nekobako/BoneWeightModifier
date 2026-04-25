@@ -74,6 +74,7 @@ namespace net.nekobako.BoneWeightModifier.Editor
                 .ToDictionary(x => x, x => BoneWeightProcessor.Create(x.Item1, x.Item2, context));
             var boneIndices = bones
                 .Select((x, i) => (bone: x, index: i))
+                .Where(x => x.bone)
                 .ToDictionary(x => x.bone, x => x.index);
 
             var boneWeightIndex = 0;
