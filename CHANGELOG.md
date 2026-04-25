@@ -14,9 +14,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Removed
 
 ### Fixed
-- Exception was thrown when there were missing bones.
 
 ### Security
+
+## [1.0.2] - 2026-04-25
+### Fixed
+- Exception was thrown when there were missing bones.
 
 ## [1.0.1] - 2026-04-22
 ### Fixed
