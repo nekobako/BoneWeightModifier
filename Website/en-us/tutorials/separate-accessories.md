@@ -1,7 +1,7 @@
 # Separate Accessories
 This page explains how to separate the hairpin part from the hair mesh.
 
-1. Create nested empty Game Objects under the avatar root.  
+1. Create an empty Game Objects under the avatar root.  
 This Game Object will later become a bone, so place it accordingly.
 
 ![Create Game Object](../images/tutorials/separate-accessories/create-game-object.png)
