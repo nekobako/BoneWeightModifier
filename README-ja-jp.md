@@ -6,6 +6,8 @@ VRChat アバターのための非破壊ボーンウェイト追加/編集ツー
 新規のボーンウェイトの割り当てや既存のボーンウェイトの上書きが行えます。  
 非破壊ツールなのでコンポーネントを削除するだけでいつでも元に戻すことができます。
 
+![ボーンウェイトモディファイヤー](https://github.com/user-attachments/assets/0f717236-8a51-46f0-a755-27c99ef787fa)
+
 ## インストール
 1. [VPM Listing](https://vpm.nekobako.net) の `Add to VCC` ボタンを押してリポジトリを追加します。
 2. プロジェクトの `Manage Project` ボタンを押します。
