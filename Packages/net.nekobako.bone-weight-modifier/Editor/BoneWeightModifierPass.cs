@@ -16,7 +16,9 @@ namespace net.nekobako.BoneWeightModifier.Editor
             var modifiers = context.AvatarRootObject.GetComponentsInChildren<BoneWeightModifier>(true);
 
             foreach (var grouping in modifiers
-                .Where(x => x.Renderer && x.Renderer.sharedMesh)
+                .Where(x =>
+                    x.Renderer is MeshRenderer && x.Renderer.TryGetComponent<MeshFilter>(out var meshFilter) && meshFilter.sharedMesh ||
+                    x.Renderer is SkinnedMeshRenderer skinnedMeshRenderer && skinnedMeshRenderer.sharedMesh)
                 .GroupBy(x => x.Renderer))
             {
                 BoneWeightModifierProcessor.Process(grouping.Key, grouping

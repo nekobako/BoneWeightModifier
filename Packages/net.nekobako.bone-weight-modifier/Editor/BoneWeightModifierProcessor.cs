@@ -20,10 +20,94 @@ namespace net.nekobako.BoneWeightModifier.Editor
             public NativeBitArray.ReadOnly SubMeshMasks { get; init; }
         }
 
-        public static void Process(SkinnedMeshRenderer renderer, (Transform, IBoneWeight)[] weights)
+        public static void Process(Renderer renderer, (Transform, IBoneWeight)[] weights)
         {
+            if (renderer is not SkinnedMeshRenderer skinnedMeshRenderer)
+            {
+                var gameObject = renderer.gameObject;
+                var meshFilter = renderer.GetComponent<MeshFilter>();
+
+                var allowOcclusionWhenDynamic     = renderer.allowOcclusionWhenDynamic;
+                // var bounds                     : Not Serialized
+                var enabled                       = renderer.enabled;
+                // var forceRenderingOff          : Not Serialized
+                // var isPartOfStaticBatch        : Read Only
+                // var isVisible                  : Read Only
+                // var lightmapIndex              : Not Serialized
+                // var lightmapScaleOffset        : Not Serialized
+                var lightProbeProxyVolumeOverride = renderer.lightProbeProxyVolumeOverride;
+                var lightProbeUsage               = renderer.lightProbeUsage;
+                var localBounds                   = renderer.localBounds;
+                // var localToWorldMatrix         : Read Only
+                // var material                   : Set by sharedMaterials
+                // var materials                  : Set by sharedMaterials
+                var motionVectorGenerationMode    = renderer.motionVectorGenerationMode;
+                var probeAnchor                   = renderer.probeAnchor;
+                var rayTracingMode                = renderer.rayTracingMode;
+                // var realtimeLightmapIndex      : Not Serialized
+                // var realtimeLightmapScaleOffset: Not Serialized
+                var receiveShadows                = renderer.receiveShadows;
+                var reflectionProbeUsage          = renderer.reflectionProbeUsage;
+                var rendererPriority              = renderer.rendererPriority;
+                var renderingLayerMask            = renderer.renderingLayerMask;
+                var shadowCastingMode             = renderer.shadowCastingMode;
+                // var sharedMaterial             : Set by sharedMaterials
+                var sharedMaterials               = renderer.sharedMaterials;
+                var sortingLayerID                = renderer.sortingLayerID;
+                // var sortingLayerID             : Set by sortingLayerName
+                var sortingOrder                  = renderer.sortingOrder;
+                var staticShadowCaster            = renderer.staticShadowCaster;
+                // var worldToLocalMatrix         : Read Only
+                // var bones                      : Not Provided
+                // var quality                    : Not Provided
+                var sharedMesh                    = meshFilter.sharedMesh;
+                // var skinnedMotionVectors       : Not Provided
+                // var updateWhenOffscreen        : Not Provided
+
+                Object.DestroyImmediate(meshFilter);
+                Object.DestroyImmediate(renderer);
+                skinnedMeshRenderer = gameObject.AddComponent<SkinnedMeshRenderer>();
+
+                skinnedMeshRenderer.allowOcclusionWhenDynamic     = allowOcclusionWhenDynamic;
+                // skinnedMeshRenderer.bounds                     : Not Serialized
+                skinnedMeshRenderer.enabled                       = enabled;
+                // skinnedMeshRenderer.forceRenderingOff          : Not Serialized
+                // skinnedMeshRenderer.isPartOfStaticBatch        : Read Only
+                // skinnedMeshRenderer.isVisible                  : Read Only
+                // skinnedMeshRenderer.lightmapIndex              : Not Serialized
+                // skinnedMeshRenderer.lightmapScaleOffset        : Not Serialized
+                skinnedMeshRenderer.lightProbeProxyVolumeOverride = lightProbeProxyVolumeOverride;
+                skinnedMeshRenderer.lightProbeUsage               = lightProbeUsage;
+                skinnedMeshRenderer.localBounds                   = localBounds;
+                // skinnedMeshRenderer.localToWorldMatrix         : Read Only
+                // skinnedMeshRenderer.material                   : Set by sharedMaterials
+                // skinnedMeshRenderer.materials                  : Set by sharedMaterials
+                skinnedMeshRenderer.motionVectorGenerationMode    = motionVectorGenerationMode;
+                skinnedMeshRenderer.probeAnchor                   = probeAnchor;
+                skinnedMeshRenderer.rayTracingMode                = rayTracingMode;
+                // skinnedMeshRenderer.realtimeLightmapIndex      : Not Serialized
+                // skinnedMeshRenderer.realtimeLightmapScaleOffset: Not Serialized
+                skinnedMeshRenderer.receiveShadows                = receiveShadows;
+                skinnedMeshRenderer.reflectionProbeUsage          = reflectionProbeUsage;
+                skinnedMeshRenderer.rendererPriority              = rendererPriority;
+                skinnedMeshRenderer.renderingLayerMask            = renderingLayerMask;
+                skinnedMeshRenderer.shadowCastingMode             = shadowCastingMode;
+                // skinnedMeshRenderer.sharedMaterial             : Set by sharedMaterials
+                skinnedMeshRenderer.sharedMaterials               = sharedMaterials;
+                skinnedMeshRenderer.sortingLayerID                = sortingLayerID;
+                // skinnedMeshRenderer.sortingLayerID             : Set by sortingLayerName
+                skinnedMeshRenderer.sortingOrder                  = sortingOrder;
+                skinnedMeshRenderer.staticShadowCaster            = staticShadowCaster;
+                // skinnedMeshRenderer.worldToLocalMatrix         : Read Only
+                // skinnedMeshRenderer.bones                      : Not Provided
+                // skinnedMeshRenderer.quality                    : Not Provided
+                skinnedMeshRenderer.sharedMesh                    = sharedMesh;
+                // skinnedMeshRenderer.skinnedMotionVectors       : Not Provided
+                // skinnedMeshRenderer.updateWhenOffscreen        : Not Provided
+            }
+
             var baked = new Mesh();
-            renderer.BakeMesh(baked, true);
+            skinnedMeshRenderer.BakeMesh(baked, true);
 
             var vertexCount = baked.vertexCount;
             var subMeshCount = baked.subMeshCount;
@@ -42,7 +126,7 @@ namespace net.nekobako.BoneWeightModifier.Editor
 
             var context = new Context
             {
-                Renderer = renderer,
+                Renderer = skinnedMeshRenderer,
                 VertexCount = vertexCount,
                 SubMeshCount = subMeshCount,
                 VertexPositions = vertexPositions.AsReadOnly(),
@@ -50,8 +134,8 @@ namespace net.nekobako.BoneWeightModifier.Editor
                 SubMeshMasks = subMeshMasks.AsReadOnly(),
             };
 
-            var mesh = Object.Instantiate(renderer.sharedMesh);
-            var bones = new List<Transform>(renderer.bones);
+            var mesh = Object.Instantiate(skinnedMeshRenderer.sharedMesh);
+            var bones = new List<Transform>(skinnedMeshRenderer.bones);
             var bindposes = new List<Matrix4x4>(mesh.bindposes);
 
             foreach (var (bone, _) in weights)
@@ -62,7 +146,7 @@ namespace net.nekobako.BoneWeightModifier.Editor
                 }
 
                 bones.Add(bone);
-                bindposes.Add(bone.worldToLocalMatrix * renderer.transform.localToWorldMatrix);
+                bindposes.Add(bone.worldToLocalMatrix * skinnedMeshRenderer.transform.localToWorldMatrix);
             }
 
             using var boneWeights = mesh.GetAllBoneWeights();
@@ -80,9 +164,10 @@ namespace net.nekobako.BoneWeightModifier.Editor
             var boneWeightIndex = 0;
             var boneWeightBuffer = new Dictionary<Transform, BoneWeight1>(byte.MaxValue);
             var boneWeightBufferList = new List<BoneWeight1>(byte.MaxValue);
-            for (var i = 0; i < boneWeightCounts.Length; i++)
+            for (var i = 0; i < vertexCount; i++)
             {
-                foreach (var boneWeight in boneWeights.Slice(boneWeightIndex, boneWeightCounts[i]))
+                var boneWeightCount = i < boneWeightCounts.Length ? boneWeightCounts[i] : 0;
+                foreach (var boneWeight in boneWeights.Slice(boneWeightIndex, boneWeightCount))
                 {
                     boneWeightBuffer[bones[boneWeight.boneIndex]] = boneWeight;
                 }
@@ -103,9 +188,9 @@ namespace net.nekobako.BoneWeightModifier.Editor
 
                 if (boneWeightBufferList.Count == 0)
                 {
-                    if (bones[^1] != renderer.transform)
+                    if (bones[^1] != skinnedMeshRenderer.transform)
                     {
-                        bones.Add(renderer.transform);
+                        bones.Add(skinnedMeshRenderer.transform);
                         bindposes.Add(Matrix4x4.identity);
                     }
 
@@ -127,7 +212,7 @@ namespace net.nekobako.BoneWeightModifier.Editor
                 }
                 boneWeightCountsList.Add((byte)boneWeightBufferList.Count);
 
-                boneWeightIndex += boneWeightCounts[i];
+                boneWeightIndex += boneWeightCount;
                 boneWeightBuffer.Clear();
                 boneWeightBufferList.Clear();
             }
@@ -142,8 +227,8 @@ namespace net.nekobako.BoneWeightModifier.Editor
             mesh.SetBoneWeights(boneWeightCountsArray, boneWeightsArray);
 
             mesh.bindposes = bindposes.ToArray();
-            renderer.bones = bones.ToArray();
-            renderer.sharedMesh = mesh;
+            skinnedMeshRenderer.bones = bones.ToArray();
+            skinnedMeshRenderer.sharedMesh = mesh;
         }
     }
 }

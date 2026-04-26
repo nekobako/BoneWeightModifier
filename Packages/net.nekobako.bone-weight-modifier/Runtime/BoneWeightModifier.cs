@@ -12,7 +12,7 @@ namespace net.nekobako.BoneWeightModifier.Runtime
         public Transform Bone = null;
 
         [SerializeField, NotKeyable]
-        public SkinnedMeshRenderer Renderer = null;
+        public Renderer Renderer = null;
 
         [SerializeReference, NotKeyable]
         public List<IBoneWeight> Weights = new();
