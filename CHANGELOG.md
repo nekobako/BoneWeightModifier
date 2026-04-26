@@ -6,7 +6,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 ### Added
-- Support MeshRenderer.
 
 ### Changed
 
@@ -17,6 +16,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Fixed
 
 ### Security
+
+## [1.1.0] - 2026-04-26
+### Added
+- Support MeshRenderer.
 
 ## [1.0.2] - 2026-04-25
 ### Fixed
