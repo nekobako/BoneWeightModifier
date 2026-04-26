@@ -57,6 +57,10 @@ export const main =
             link: "/ja-jp/tutorials/soft-squishy-cheeks",
           },
           {
+            text: "ぷるぷるのキューブ",
+            link: "/ja-jp/tutorials/soft-squishy-cube",
+          },
+          {
             text: "アクセサリの分離",
             link: "/ja-jp/tutorials/separate-accessories",
           },

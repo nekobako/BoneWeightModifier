@@ -3,6 +3,7 @@
 
 - [ふにふにのおはな](./soft-squishy-nose)
 - [もちもちのほっぺ](./soft-squishy-cheeks)
+- [ぷるぷるのキューブ](./soft-squishy-cube)
 - [アクセサリの分離](./separate-accessories)
 
 各機能について詳しく知りたい場合は [リファレンス](../references/) を参照してください。

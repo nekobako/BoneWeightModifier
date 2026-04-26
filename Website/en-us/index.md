@@ -25,8 +25,8 @@ features:
     title: "Soft, Squishy Cheeks"
     link: "./tutorials/soft-squishy-cheeks"
     details: "Make the cheeks soft and squishy"
-  - icon: "💎"
-    title: "Separate Accessories"
-    link: "./tutorials/separate-accessories"
-    details: "Separate accessories"
+  - icon: "🍮"
+    title: "Soft, Squishy Cube"
+    link: "./tutorials/soft-squishy-cube"
+    details: "Make the cube soft and squishy"
 ---
