@@ -21,7 +21,7 @@ features:
     title: "Soft, Squishy Nose"
     link: "./tutorials/soft-squishy-nose"
     details: "Make the nose soft and squishy"
-  - icon: "🍡"
+  - icon: "🍥"
     title: "Soft, Squishy Cheeks"
     link: "./tutorials/soft-squishy-cheeks"
     details: "Make the cheeks soft and squishy"

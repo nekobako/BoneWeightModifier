@@ -2,7 +2,7 @@
 このページでは髪メッシュからヘアピン部分を分離する方法について説明します。
 
 1. 空の Game Object をアバタールートの中に作成します。  
-この Game Object が後にボーンとなるため、それを前提とした位置に配置します。
+この Game Object が後にヘアピンのボーンとなるため、ヘアピンの位置に配置しています。
 
 ![Game Object の作成](../images/tutorials/separate-accessories/create-game-object.png)
 
@@ -20,7 +20,7 @@
 ![Bone Weight Modifier の追加](../images/tutorials/separate-accessories/add-bone-weight-modifiers.png)
 
 5. 1 つ目の `ボーン` には既存のウェイトが乗ったボーンを設定し、2 つ目の `ボーン` にはこの Game Object を設定します。  
-また、両方の `レンダラー` に髪メッシュの `Skinned Mesh Renderer` を設定します。
+また、両方の `レンダラー` に髪の `Skinned Mesh Renderer` を設定します。
 
 ![Bone Weight Modifier の設定](../images/tutorials/separate-accessories/configure-bone-weight-modifiers.png)
 

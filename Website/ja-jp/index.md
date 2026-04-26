@@ -21,7 +21,7 @@ features:
     title: "ふにふにのおはな"
     link: "./tutorials/soft-squishy-nose"
     details: "おはなをふにふににする"
-  - icon: "🍡"
+  - icon: "🍥"
     title: "もちもちのほっぺ"
     link: "./tutorials/soft-squishy-cheeks"
     details: "ほっぺをもちもちにする"

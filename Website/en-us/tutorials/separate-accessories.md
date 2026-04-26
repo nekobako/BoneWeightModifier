@@ -2,7 +2,7 @@
 This page explains how to separate the hairpin part from the hair mesh.
 
 1. Create an empty Game Objects under the avatar root.  
-This Game Object will later become a bone, so place it accordingly.
+This Game Object will later become the bone for the hairpin, so place it at the position of the hairpin.
 
 ![Create Game Object](../images/tutorials/separate-accessories/create-game-object.png)
 
@@ -20,7 +20,7 @@ The first is used to remove the existing bone weights, and the second is used to
 ![Add Bone Weight Modifiers](../images/tutorials/separate-accessories/add-bone-weight-modifiers.png)
 
 5. Set the first `Bone` to the bone with existing weights, and set the second `Bone` to this Game Object.  
-Also, set the both `Renderer` to the hair mesh's `Skinned Mesh Renderer`.
+Also, set the both `Renderer` to the hair's `Skinned Mesh Renderer`.
 
 ![Configure Bone Weight Modifiers](../images/tutorials/separate-accessories/configure-bone-weight-modifiers.png)
 

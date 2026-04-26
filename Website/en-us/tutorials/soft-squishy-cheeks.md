@@ -2,11 +2,11 @@
 This page explains how to add bone weights to the cheeks to make it soft and squishy.
 
 1. Create nested empty Game Objects under the avatar root.  
-These Game Objects will later become bones, so place it accordingly.
+Place the parent Game Object inside the face, and the child one at the tip of the cheek.
 
 ![Create Game Objects](../images/tutorials/soft-squishy-cheeks/create-game-objects.png)
 
-2. Add the `VRC Phys Bone` component to the outer Game Object.
+2. Add the `VRC Phys Bone` component to the parent Game Object.
 
 ![Add VRC Phys Bone](../images/tutorials/soft-squishy-cheeks/add-vrc-phys-bone.png)
 
@@ -16,7 +16,7 @@ You can later adjust settings such as `Forces > Pull`, `Forces > Spring`, and `T
 
 ![Configure VRC Phys Bone](../images/tutorials/soft-squishy-cheeks/configure-vrc-phys-bone.png)
 
-4. Add the `MA Bone Proxy` component to the outer Game Object.
+4. Add the `MA Bone Proxy` component to the parent Game Object.
 
 ![Add MA Bone Proxy](../images/tutorials/soft-squishy-cheeks/add-ma-bone-proxy.png)
 
@@ -24,11 +24,11 @@ You can later adjust settings such as `Forces > Pull`, `Forces > Spring`, and `T
 
 ![Configure MA Bone Proxy](../images/tutorials/soft-squishy-cheeks/configure-ma-bone-proxy.png)
 
-6. Add the `Bone Weight Modifier` component to the inner Game Object.
+6. Add the `Bone Weight Modifier` component to the child Game Object.
 
 ![Add Bone Weight Modifier](../images/tutorials/soft-squishy-cheeks/add-bone-weight-modifier.png)
 
-7. Set the `Renderer` to the face mesh's `Skinned Mesh Renderer`.  
+7. Set the `Renderer` to the face's `Skinned Mesh Renderer`.  
 In this case, leave the `Bone` unset to apply the weight for this Game Object.
 
 ![Configure Bone Weight Modifier](../images/tutorials/soft-squishy-cheeks/configure-bone-weight-modifier.png)
