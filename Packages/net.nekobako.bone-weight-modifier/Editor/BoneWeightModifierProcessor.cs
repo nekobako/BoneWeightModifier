@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.Collections;
 using UnityEngine;
+using nadena.dev.ndmf.runtime;
 using Object = UnityEngine.Object;
 
 namespace net.nekobako.BoneWeightModifier.Editor
@@ -135,30 +136,12 @@ namespace net.nekobako.BoneWeightModifier.Editor
             };
 
             var mesh = Object.Instantiate(skinnedMeshRenderer.sharedMesh);
-            var bones = new List<Transform>(skinnedMeshRenderer.bones);
-            var bindposes = Enumerable.Range(0, bones.Count)
-                .Select(x => x < mesh.bindposes.Length ? mesh.bindposes[x] : Matrix4x4.identity)
+            var bones = skinnedMeshRenderer.bones
+                .Concat(weights
+                    .Select(x => x.Item1)
+                    .Where(x => !skinnedMeshRenderer.bones.Contains(x))
+                    .Distinct())
                 .ToList();
-
-            foreach (var (bone, _) in weights)
-            {
-                if (bones.Contains(bone))
-                {
-                    continue;
-                }
-
-                bones.Add(bone);
-                bindposes.Add(bone.worldToLocalMatrix * skinnedMeshRenderer.transform.localToWorldMatrix);
-            }
-
-            using var boneWeights = mesh.GetAllBoneWeights();
-            using var boneWeightCounts = mesh.GetBonesPerVertex();
-            using var boneWeightsList = new NativeList<BoneWeight1>(boneWeights.Length, Allocator.Temp);
-            using var boneWeightCountsList = new NativeList<byte>(boneWeightCounts.Length, Allocator.Temp);
-
-            var boneWeightProcessors = weights
-                .Distinct()
-                .ToDictionary(x => x, x => BoneWeightProcessor.Create(x.Item1, x.Item2, context));
             var boneIndices = bones
                 .Select((x, i) => (bone: x, index: i))
                 .Where(x => x.bone)
@@ -166,6 +149,49 @@ namespace net.nekobako.BoneWeightModifier.Editor
                 .ToDictionary(x => x.Key, x => x.First().index);
             var fallbackBoneIndex = boneIndices.GetValueOrDefault(skinnedMeshRenderer.transform, bones.Count);
 
+            var bindposes = new List<Matrix4x4>();
+            for (var i = 0; i < bones.Count; i++)
+            {
+                var bone = bones[i];
+                if (bone && bone.TryGetComponent<BoneWeightBinder>(out var binder))
+                {
+                    if (binder.IsBound)
+                    {
+                        var root = RuntimeUtil.FindAvatarInParents(bone);
+                        if (root)
+                        {
+                            bindposes.Add(binder.Bindpose * root.worldToLocalMatrix * skinnedMeshRenderer.transform.localToWorldMatrix);
+                            continue;
+                        }
+                    }
+                }
+                else
+                {
+                    if (i < skinnedMeshRenderer.bones.Length && i < mesh.bindposes.Length)
+                    {
+                        bindposes.Add(mesh.bindposes[i]);
+                        continue;
+                    }
+                }
+
+                if (bone)
+                {
+                    bindposes.Add(bone.worldToLocalMatrix * skinnedMeshRenderer.transform.localToWorldMatrix);
+                }
+                else
+                {
+                    bindposes.Add(Matrix4x4.identity);
+                }
+            }
+
+            var processors = weights
+                .Distinct()
+                .ToDictionary(x => x, x => BoneWeightProcessor.Create(x.Item1, x.Item2, bindposes[boneIndices[x.Item1]], context));
+
+            using var boneWeights = mesh.GetAllBoneWeights();
+            using var boneWeightCounts = mesh.GetBonesPerVertex();
+            using var boneWeightsList = new NativeList<BoneWeight1>(boneWeights.Length, Allocator.Temp);
+            using var boneWeightCountsList = new NativeList<byte>(boneWeightCounts.Length, Allocator.Temp);
             var boneWeightIndex = 0;
             var boneWeightBuffer = new Dictionary<Transform, BoneWeight1>(byte.MaxValue);
             var boneWeightBufferList = new List<BoneWeight1>(byte.MaxValue);
@@ -188,7 +214,7 @@ namespace net.nekobako.BoneWeightModifier.Editor
                         boneIndex = boneIndices[bone],
                         weight = 0.0f,
                     };
-                    boneWeightProcessors[(bone, weight)].Process(i, ref boneWeight);
+                    processors[(bone, weight)].Process(i, ref boneWeight);
                     boneWeightBuffer[bone] = boneWeight;
                 }
 
@@ -220,9 +246,9 @@ namespace net.nekobako.BoneWeightModifier.Editor
                 boneWeightBufferList.Clear();
             }
 
-            foreach (var boneWeightProcessor in boneWeightProcessors.Values)
+            foreach (var processor in processors.Values)
             {
-                boneWeightProcessor.Dispose();
+                processor.Dispose();
             }
 
             if (fallbackBoneIndex == bones.Count)

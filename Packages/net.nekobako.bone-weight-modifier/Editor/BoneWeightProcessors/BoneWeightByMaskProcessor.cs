@@ -14,10 +14,10 @@ namespace net.nekobako.BoneWeightModifier.Editor
         [InitializeOnLoadMethod]
         private static void Initialize()
         {
-            Register((bone, weight, context) => new BoneWeightByMaskProcessor(bone, weight, context));
+            Register((bone, weight, bindpose, context) => new BoneWeightByMaskProcessor(bone, weight, bindpose, context));
         }
 
-        private BoneWeightByMaskProcessor(Transform bone, BoneWeightByMask weight, BoneWeightModifierProcessor.Context context) : base(bone, weight, context)
+        private BoneWeightByMaskProcessor(Transform bone, BoneWeightByMask weight, Matrix4x4 bindpose, BoneWeightModifierProcessor.Context context) : base(bone, weight, bindpose, context)
         {
             m_Mask = Weight.Mask;
             m_Slot = Mathf.Min(Weight.Slot, Context.SubMeshCount - 1);

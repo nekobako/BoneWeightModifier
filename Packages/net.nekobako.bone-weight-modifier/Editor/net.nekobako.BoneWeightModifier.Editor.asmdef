@@ -4,6 +4,7 @@
     "references": [
         "Unity.Collections",
         "nadena.dev.ndmf",
+        "nadena.dev.ndmf.runtime",
         "net.nekobako.MaskTextureEditor.Editor",
         "net.nekobako.BoneWeightModifier.Runtime",
         "net.nekobako.BoneWeightModifier.Localization"

@@ -61,3 +61,6 @@ msgstr "GitHub を開く"
 
 msgid "mask-texture-editor-dialog-cancel"
 msgstr "キャンセル"
+
+msgid "bind-bone"
+msgstr "ボーンをバインド"

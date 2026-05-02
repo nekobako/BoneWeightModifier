@@ -14,6 +14,7 @@ namespace net.nekobako.BoneWeightModifier.Editor
         protected override void Execute(BuildContext context)
         {
             var modifiers = context.AvatarRootObject.GetComponentsInChildren<BoneWeightModifier>(true);
+            var binders = context.AvatarRootObject.GetComponentsInChildren<BoneWeightBinder>(true);
 
             foreach (var grouping in modifiers
                 .Where(x =>
@@ -29,6 +30,10 @@ namespace net.nekobako.BoneWeightModifier.Editor
             foreach (var modifier in modifiers)
             {
                 Object.DestroyImmediate(modifier);
+            }
+            foreach (var binder in binders)
+            {
+                Object.DestroyImmediate(binder);
             }
         }
     }

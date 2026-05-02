@@ -61,3 +61,6 @@ msgstr "Open GitHub"
 
 msgid "mask-texture-editor-dialog-cancel"
 msgstr "Cancel"
+
+msgid "bind-bone"
+msgstr "Bind Bone"
