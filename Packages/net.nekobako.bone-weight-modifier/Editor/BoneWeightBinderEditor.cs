@@ -25,6 +25,22 @@ namespace net.nekobako.BoneWeightModifier.Editor
 
             GUIUtils.Space();
 
+            EditorGUILayout.BeginHorizontal();
+
+            EditorGUI.BeginChangeCheck();
+
+            EditorGUILayout.PrefixLabel(GUIUtils.TrText("preview"));
+            var enable = GUILayout.Toolbar(BoneWeightModifierPreview.PreviewNode.IsEnabled.Value ? 1 : 0, new[] { CL4EE.Tr("disable-preview"), CL4EE.Tr("enable-preview") }) == 1;
+
+            if (EditorGUI.EndChangeCheck())
+            {
+                BoneWeightModifierPreview.PreviewNode.IsEnabled.Value = enable;
+            }
+
+            EditorGUILayout.EndHorizontal();
+
+            GUIUtils.Space();
+
             EditorGUI.BeginChangeCheck();
 
             var bind = GUILayout.Toggle(binder.IsBound, GUIUtils.TrText("bind-bone"), GUI.skin.button, GUILayout.Height(EditorGUIUtility.singleLineHeight * 2));

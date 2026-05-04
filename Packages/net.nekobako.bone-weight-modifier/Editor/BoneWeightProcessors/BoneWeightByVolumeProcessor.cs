@@ -10,16 +10,20 @@ namespace net.nekobako.BoneWeightModifier.Editor
         [InitializeOnLoadMethod]
         private static void Initialize()
         {
-            Register((bone, weight, bindpose, context) => new BoneWeightByVolumeProcessor(bone, weight, bindpose, context));
+            Register((bone, weight, bindpose) => new BoneWeightByVolumeProcessor(bone, weight, bindpose));
         }
 
-        private BoneWeightByVolumeProcessor(Transform bone, BoneWeightByVolume weight, Matrix4x4 bindpose, BoneWeightModifierProcessor.Context context) : base(bone, weight, bindpose, context)
+        private BoneWeightByVolumeProcessor(Transform bone, BoneWeightByVolume weight, Matrix4x4 bindpose) : base(bone, weight, bindpose)
         {
         }
 
-        public override void Process(int index, ref BoneWeight1 result)
+        public override void Prepare(BoneWeightModifierProcessor.Context context)
         {
-            var position = Bindpose.MultiplyPoint(Context.VertexPositions[index]);
+        }
+
+        public override void Process(BoneWeightModifierProcessor.Context context, int index, ref BoneWeight1 result)
+        {
+            var position = Bindpose.MultiplyPoint(context.VertexPositions[index]);
             var distance = Vector3.Distance(Weight.Position, position);
             var rate = InverseLerp(Weight.Radius * Weight.Hardness, Weight.Radius, distance);
             var strength = (1.0f - Mathf.SmoothStep(0.0f, 1.0f, rate)) * Weight.Strength;

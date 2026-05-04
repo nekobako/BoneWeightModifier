@@ -1,5 +1,6 @@
 using UnityEditor;
 using UnityEngine;
+using nadena.dev.ndmf.preview;
 
 namespace net.nekobako.BoneWeightModifier.Editor
 {
@@ -7,22 +8,42 @@ namespace net.nekobako.BoneWeightModifier.Editor
 
     internal class BoneWeightByMaskProcessor : BoneWeightProcessor<BoneWeightByMask>
     {
-        private readonly int m_Slot = 0;
-        private readonly Texture2D m_Mask = null;
-        private readonly Texture2D m_Temp = null;
+        private int m_Slot = 0;
+        private Texture2D m_Mask = null;
+        private Texture2D m_Temp = null;
 
         [InitializeOnLoadMethod]
         private static void Initialize()
         {
-            Register((bone, weight, bindpose, context) => new BoneWeightByMaskProcessor(bone, weight, bindpose, context));
+            Register((bone, weight, bindpose) => new BoneWeightByMaskProcessor(bone, weight, bindpose));
         }
 
-        private BoneWeightByMaskProcessor(Transform bone, BoneWeightByMask weight, Matrix4x4 bindpose, BoneWeightModifierProcessor.Context context) : base(bone, weight, bindpose, context)
+        private BoneWeightByMaskProcessor(Transform bone, BoneWeightByMask weight, Matrix4x4 bindpose) : base(bone, weight, bindpose)
+        {
+        }
+
+        public override void Prepare(BoneWeightModifierProcessor.Context context)
         {
             m_Mask = Weight.Mask;
-            m_Slot = Mathf.Min(Weight.Slot, Context.SubMeshCount - 1);
+            m_Slot = Mathf.Min(Weight.Slot, context.SubMeshCount - 1);
 
-            if (!m_Mask || m_Mask.isReadable)
+            if (!m_Mask)
+            {
+                return;
+            }
+
+            context.ComputeContext.Observe(m_Mask, x => x.imageContentsHash);
+
+#if BWM_MASK_TEXTURE_EDITOR
+            var editing = MaskTextureEditor.Editor.Window.ObserveTextureFor(context.ComputeContext, m_Mask, context.OriginalRenderer, m_Slot,
+                BoneWeightByMaskDrawer.MaskTextureEditorToken);
+            if (editing)
+            {
+                m_Mask = editing;
+            }
+#endif
+
+            if (m_Mask.isReadable)
             {
                 return;
             }
@@ -43,14 +64,14 @@ namespace net.nekobako.BoneWeightModifier.Editor
             RenderTexture.ReleaseTemporary(rt);
         }
 
-        public override void Process(int index, ref BoneWeight1 result)
+        public override void Process(BoneWeightModifierProcessor.Context context, int index, ref BoneWeight1 result)
         {
-            if (!m_Mask || !Context.SubMeshMasks.IsSet(Context.VertexCount * m_Slot + index))
+            if (!m_Mask || !context.SubMeshMasks.IsSet(context.VertexCount * m_Slot + index))
             {
                 return;
             }
 
-            var uv = Context.VertexUvs[index];
+            var uv = context.VertexUvs[index];
             var strength = m_Mask.GetPixel((int)(uv.x * m_Mask.width), (int)(uv.y * m_Mask.height)).r;
             result.weight = Mathf.Lerp(result.weight, Weight.Weight, strength);
         }

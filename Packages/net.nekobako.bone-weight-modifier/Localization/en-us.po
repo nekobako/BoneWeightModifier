@@ -5,6 +5,15 @@ msgstr ""
 msgid "locale:en-us"
 msgstr "English"
 
+msgid "preview"
+msgstr "Preview"
+
+msgid "disable-preview"
+msgstr "Disable"
+
+msgid "enable-preview"
+msgstr "Enable"
+
 msgid "bone"
 msgstr "Bone"
 

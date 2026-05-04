@@ -8,41 +8,46 @@ namespace net.nekobako.BoneWeightModifier.Editor
 
     internal abstract class BoneWeightProcessor : IDisposable
     {
-        private static readonly Dictionary<Type, Func<Transform, IBoneWeight, Matrix4x4, BoneWeightModifierProcessor.Context, BoneWeightProcessor>> s_Creators = new();
+        public readonly Transform Bone = null;
+        public readonly IBoneWeight Weight = null;
+        public readonly Matrix4x4 Bindpose = default;
 
-        protected static void Register<T>(Func<Transform, T, Matrix4x4, BoneWeightModifierProcessor.Context, BoneWeightProcessor> creator) where T : IBoneWeight
+        private static readonly Dictionary<Type, Func<Transform, IBoneWeight, Matrix4x4, BoneWeightProcessor>> s_Creators = new();
+
+        protected static void Register<T>(Func<Transform, T, Matrix4x4, BoneWeightProcessor> creator) where T : IBoneWeight
         {
-            s_Creators[typeof(T)] = (bone, weight, bindpose, context) => creator(bone, (T)weight, bindpose, context);
+            s_Creators[typeof(T)] = (bone, weight, bindpose) => creator(bone, (T)weight, bindpose);
         }
 
-        public static BoneWeightProcessor Create(Transform bone, IBoneWeight weight, Matrix4x4 bindpose, BoneWeightModifierProcessor.Context context)
+        public static BoneWeightProcessor Create(Transform bone, IBoneWeight weight, Matrix4x4 bindpose)
         {
-            return s_Creators[weight.GetType()].Invoke(bone, weight, bindpose, context);
+            return s_Creators[weight.GetType()].Invoke(bone, weight, bindpose);
         }
 
-        public abstract void Process(int index, ref BoneWeight1 result);
+        protected BoneWeightProcessor(Transform bone, IBoneWeight weight, Matrix4x4 bindpose)
+        {
+            Bone = bone;
+            Weight = weight;
+            Bindpose = bindpose;
+        }
 
+        public abstract void Prepare(BoneWeightModifierProcessor.Context context);
+        public abstract void Process(BoneWeightModifierProcessor.Context context, int index, ref BoneWeight1 result);
         public abstract void Dispose();
     }
 
     internal abstract class BoneWeightProcessor<T> : BoneWeightProcessor where T : IBoneWeight
     {
-        protected readonly Transform Bone = null;
-        protected readonly T Weight = default;
-        protected readonly Matrix4x4 Bindpose = default;
-        protected readonly BoneWeightModifierProcessor.Context Context = default;
+        protected new readonly T Weight = default;
 
-        protected static void Register(Func<Transform, T, Matrix4x4, BoneWeightModifierProcessor.Context, BoneWeightProcessor<T>> creator)
+        protected static void Register(Func<Transform, T, Matrix4x4, BoneWeightProcessor<T>> creator)
         {
             Register<T>(creator);
         }
 
-        protected BoneWeightProcessor(Transform bone, T weight, Matrix4x4 bindpose, BoneWeightModifierProcessor.Context context)
+        protected BoneWeightProcessor(Transform bone, T weight, Matrix4x4 bindpose) : base(bone, weight, bindpose)
         {
-            Bone = bone;
             Weight = weight;
-            Bindpose = bindpose;
-            Context = context;
         }
     }
 }

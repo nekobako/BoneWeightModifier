@@ -5,6 +5,15 @@ msgstr ""
 msgid "locale:ja-jp"
 msgstr "日本語"
 
+msgid "preview"
+msgstr "プレビュー"
+
+msgid "disable-preview"
+msgstr "無効"
+
+msgid "enable-preview"
+msgstr "有効"
+
 msgid "bone"
 msgstr "ボーン"
 

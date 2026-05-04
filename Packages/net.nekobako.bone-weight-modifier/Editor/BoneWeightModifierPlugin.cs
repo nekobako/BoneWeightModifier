@@ -15,7 +15,8 @@ namespace net.nekobako.BoneWeightModifier.Editor
         {
             InPhase(BuildPhase.Transforming)
                 .BeforePlugin("nadena.dev.modular-avatar")
-                .Run(BoneWeightModifierPass.Instance);
+                .Run(BoneWeightModifierPass.Instance)
+                .PreviewingWith(new BoneWeightModifierPreview());
         }
     }
 }
