@@ -14,9 +14,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Removed
 
 ### Fixed
-- BoneWeightByMask was not correctly handling meshes with multiple submeshes.
 
 ### Security
+
+## [1.1.1] - 2026-05-05
+### Fixed
+- BoneWeightByMask was not correctly handling meshes with multiple submeshes.
 
 ## [1.1.0] - 2026-04-26
 ### Added
