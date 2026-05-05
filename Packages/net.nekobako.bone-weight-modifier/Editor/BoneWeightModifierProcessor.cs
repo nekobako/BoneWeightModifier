@@ -155,6 +155,7 @@ namespace net.nekobako.BoneWeightModifier.Editor
             using var boneWeightCountsList = new NativeList<byte>(boneWeightCounts.Length, Allocator.Temp);
 
             var boneWeightProcessors = weights
+                .Distinct()
                 .ToDictionary(x => x, x => BoneWeightProcessor.Create(x.Item1, x.Item2, context));
             var boneIndices = bones
                 .Select((x, i) => (bone: x, index: i))
