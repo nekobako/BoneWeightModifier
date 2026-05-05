@@ -20,7 +20,7 @@ namespace net.nekobako.BoneWeightModifier.Editor
         private BoneWeightByMaskProcessor(Transform bone, BoneWeightByMask weight, BoneWeightModifierProcessor.Context context) : base(bone, weight, context)
         {
             m_Mask = Weight.Mask;
-            m_Slot = Mathf.Min(Weight.Slot, Context.SubMeshCount);
+            m_Slot = Mathf.Min(Weight.Slot, Context.SubMeshCount - 1);
 
             if (!m_Mask || m_Mask.isReadable)
             {
