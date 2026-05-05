@@ -230,6 +230,11 @@ namespace net.nekobako.BoneWeightModifier.Editor
                 boneWeightProcessor.Dispose();
             }
 
+            // Workaround for errors such as "Unsupported conversion of vertex data (format 0 to 4, dimensions 4 to 4)"
+            using var emptyBoneWeightsArray = new NativeArray<BoneWeight1>(0, Allocator.Temp);
+            using var emptyBoneWeightCountsArray = new NativeArray<byte>(0, Allocator.Temp);
+            mesh.SetBoneWeights(emptyBoneWeightCountsArray, emptyBoneWeightsArray);
+
             using var boneWeightsArray = boneWeightsList.ToArray(Allocator.Temp);
             using var boneWeightCountsArray = boneWeightCountsList.ToArray(Allocator.Temp);
             mesh.SetBoneWeights(boneWeightCountsArray, boneWeightsArray);
