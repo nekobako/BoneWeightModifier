@@ -118,7 +118,7 @@ namespace net.nekobako.BoneWeightModifier.Editor
             {
                 foreach (var index in baked.GetIndices(i))
                 {
-                    subMeshMasks.Set(subMeshCount * i + index, true);
+                    subMeshMasks.Set(vertexCount * i + index, true);
                 }
             }
 

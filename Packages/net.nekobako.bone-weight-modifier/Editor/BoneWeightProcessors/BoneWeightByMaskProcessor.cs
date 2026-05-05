@@ -45,7 +45,7 @@ namespace net.nekobako.BoneWeightModifier.Editor
 
         public override void Process(int index, ref BoneWeight1 result)
         {
-            if (!m_Mask || !Context.SubMeshMasks.IsSet(Context.SubMeshCount * m_Slot + index))
+            if (!m_Mask || !Context.SubMeshMasks.IsSet(Context.VertexCount * m_Slot + index))
             {
                 return;
             }
