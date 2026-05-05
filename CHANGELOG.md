@@ -14,9 +14,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Removed
 
 ### Fixed
-- Error when specifying a material slot greater than the number of submeshes in BoneWeightByMask.
 
 ### Security
+
+## [1.1.2] - 2026-05-05
+### Fixed
+- Error when specifying a material slot greater than the number of submeshes in BoneWeightByMask.
 
 ## [1.1.1] - 2026-05-05
 ### Fixed
