@@ -15,6 +15,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Fixed
 - Exception when duplicate weight definitions existing.
+- Exception when mesh has weights for missing bones.
 
 ### Security
 

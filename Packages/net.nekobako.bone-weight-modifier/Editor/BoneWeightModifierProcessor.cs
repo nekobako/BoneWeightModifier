@@ -170,7 +170,11 @@ namespace net.nekobako.BoneWeightModifier.Editor
                 var boneWeightCount = i < boneWeightCounts.Length ? boneWeightCounts[i] : 0;
                 foreach (var boneWeight in boneWeights.Slice(boneWeightIndex, boneWeightCount))
                 {
-                    boneWeightBuffer[bones[boneWeight.boneIndex]] = boneWeight;
+                    var bone = boneWeight.boneIndex < skinnedMeshRenderer.bones.Length ? bones[boneWeight.boneIndex] : null;
+                    if (bone)
+                    {
+                        boneWeightBuffer[bone] = boneWeight;
+                    }
                 }
 
                 foreach (var (bone, weight) in weights)
