@@ -160,7 +160,8 @@ namespace net.nekobako.BoneWeightModifier.Editor
             var boneIndices = bones
                 .Select((x, i) => (bone: x, index: i))
                 .Where(x => x.bone)
-                .ToDictionary(x => x.bone, x => x.index);
+                .GroupBy(x => x.bone)
+                .ToDictionary(x => x.Key, x => x.First().index);
 
             var boneWeightIndex = 0;
             var boneWeightBuffer = new Dictionary<Transform, BoneWeight1>(byte.MaxValue);
