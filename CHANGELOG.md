@@ -19,6 +19,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Exception when renderer has duplicate bones.
 - Error when the number of bones mismatches between the renderer and the mesh.
 - Error when VertexAttributeFormat mismatches.
+- Duplicate bones could be added to the renderer.
 
 ### Security
 

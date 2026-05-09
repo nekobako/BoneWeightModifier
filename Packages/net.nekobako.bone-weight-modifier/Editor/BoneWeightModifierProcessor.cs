@@ -164,6 +164,7 @@ namespace net.nekobako.BoneWeightModifier.Editor
                 .Where(x => x.bone)
                 .GroupBy(x => x.bone)
                 .ToDictionary(x => x.Key, x => x.First().index);
+            var fallbackBoneIndex = boneIndices.GetValueOrDefault(skinnedMeshRenderer.transform, bones.Count);
 
             var boneWeightIndex = 0;
             var boneWeightBuffer = new Dictionary<Transform, BoneWeight1>(byte.MaxValue);
@@ -196,15 +197,9 @@ namespace net.nekobako.BoneWeightModifier.Editor
 
                 if (boneWeightBufferList.Count == 0)
                 {
-                    if (bones[^1] != skinnedMeshRenderer.transform)
-                    {
-                        bones.Add(skinnedMeshRenderer.transform);
-                        bindposes.Add(Matrix4x4.identity);
-                    }
-
                     boneWeightBufferList.Add(new()
                     {
-                        boneIndex = bones.Count - 1,
+                        boneIndex = fallbackBoneIndex,
                         weight = 1.0f,
                     });
                 }
@@ -228,6 +223,12 @@ namespace net.nekobako.BoneWeightModifier.Editor
             foreach (var boneWeightProcessor in boneWeightProcessors.Values)
             {
                 boneWeightProcessor.Dispose();
+            }
+
+            if (fallbackBoneIndex == bones.Count)
+            {
+                bones.Add(skinnedMeshRenderer.transform);
+                bindposes.Add(Matrix4x4.identity);
             }
 
             // Workaround for errors such as "Unsupported conversion of vertex data (format 0 to 4, dimensions 4 to 4)"
