@@ -136,7 +136,9 @@ namespace net.nekobako.BoneWeightModifier.Editor
 
             var mesh = Object.Instantiate(skinnedMeshRenderer.sharedMesh);
             var bones = new List<Transform>(skinnedMeshRenderer.bones);
-            var bindposes = new List<Matrix4x4>(mesh.bindposes);
+            var bindposes = Enumerable.Range(0, bones.Count)
+                .Select(x => x < mesh.bindposes.Length ? mesh.bindposes[x] : Matrix4x4.identity)
+                .ToList();
 
             foreach (var (bone, _) in weights)
             {
