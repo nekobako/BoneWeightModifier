@@ -6,8 +6,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 ### Added
-- Implement BoneWeightBinder.
-- Implement NDMF preview.
 
 ### Changed
 
@@ -16,14 +14,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Removed
 
 ### Fixed
+
+### Security
+
+## [1.2.0] - 2026-05-10
+### Added
+- Implement BoneWeightBinder.
+- Implement NDMF preview.
+
+### Fixed
 - Exception when duplicate weight definitions existing.
 - Exception when mesh has weights for missing bones.
 - Exception when renderer has duplicate bones.
 - Error when the number of bones mismatches between the renderer and the mesh.
 - Error when VertexAttributeFormat mismatches.
 - Duplicate bones could be added to the renderer.
-
-### Security
 
 ## [1.1.2] - 2026-05-05
 ### Fixed
