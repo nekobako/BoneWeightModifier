@@ -77,6 +77,10 @@ export const main =
             link: "/references/bone-weight-modifier-component",
           },
           {
+            text: "Bone Weight Binder Component",
+            link: "/references/bone-weight-binder-component",
+          },
+          {
             text: "Weights",
             link: "/references/weights/",
             collapsed: false,

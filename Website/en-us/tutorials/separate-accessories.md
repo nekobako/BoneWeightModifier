@@ -1,5 +1,5 @@
 # Separate Accessories
-This page explains how to separate the hairpin part from the hair mesh.
+This page explains how to separate the hairpin that is part of the hair mesh, allowing it to be moved independently.
 
 1. Create an empty Game Objects under the avatar root.  
 This Game Object will later become the bone for the hairpin, so place it at the position of the hairpin.
@@ -33,6 +33,14 @@ Also, set the first `Weight` to `0` and the second `Weight` to `1`.
 
 ![Configure Mask Weights](../images/tutorials/separate-accessories/configure-mask-weights.png)
 
-8. Enter Play Mode to confirm that the hairpin part has been separated from the hair mesh.
+8. Add the `Bone Weight Binder` component.
+
+![Add Bone Weight Binder](../images/tutorials/separate-accessories/add-bone-weight-binder.png)
+
+9. Press the `Bind Bone` button.
+
+![Configure Bone Weight Binder](../images/tutorials/separate-accessories/configure-bone-weight-binder.png)
+
+10. Switch `Preview` to `Enable` and move the bone to confirm that the hairpin part has been separated from the hair mesh.
 
 <video muted autoplay loop playsinline src="../videos/tutorials/separate-accessories/separate-accessories.mp4"></video>

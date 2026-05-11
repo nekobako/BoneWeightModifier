@@ -77,6 +77,10 @@ export const main =
             link: "/ja-jp/references/bone-weight-modifier-component",
           },
           {
+            text: "Bone Weight Binder コンポーネント",
+            link: "/ja-jp/references/bone-weight-binder-component",
+          },
+          {
             text: "ウェイト",
             link: "/ja-jp/references/weights/",
             collapsed: false,

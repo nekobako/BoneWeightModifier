@@ -1,5 +1,5 @@
 # アクセサリの分離
-このページでは髪メッシュからヘアピン部分を分離する方法について説明します。
+このページでは髪メッシュの一部になっているヘアピンを分離し、独立して動かせるようにする方法について説明します。
 
 1. 空の Game Object をアバタールートの中に作成します。  
 この Game Object が後にヘアピンのボーンとなるため、ヘアピンの位置に配置しています。
@@ -33,6 +33,14 @@
 
 ![Mask ウェイトの設定](../images/tutorials/separate-accessories/configure-mask-weights.png)
 
-8. Play Mode に入って髪メッシュからヘアピン部分が分離されていることを確認します。
+8. `Bone Weight Binder` コンポーネントを追加します。
+
+![Bone Weight Binder の追加](../images/tutorials/separate-accessories/add-bone-weight-binder.png)
+
+9. `ボーンをバインド` ボタンを押します。
+
+![Bone Weight Binder の設定](../images/tutorials/separate-accessories/configure-bone-weight-binder.png)
+
+10. `プレビュー` を `有効` にしてボーンを移動し、髪メッシュからヘアピン部分が分離されていることを確認します。
 
 <video muted autoplay loop playsinline src="../videos/tutorials/separate-accessories/separate-accessories.mp4"></video>
