@@ -90,7 +90,13 @@ namespace net.nekobako.BoneWeightModifier.Editor
                 .Where(x => x.bone)
                 .GroupBy(x => x.bone)
                 .ToDictionary(x => x.Key, x => x.First().index);
-            var fallbackBoneIndex = boneIndices.GetValueOrDefault(original.transform, extendedBoneCount);
+
+            var fallbackBone = proxy switch
+            {
+                SkinnedMeshRenderer skinnedMeshRenderer when skinnedMeshRenderer.rootBone => skinnedMeshRenderer.rootBone,
+                _ => original.transform,
+            };
+            var fallbackBoneIndex = boneIndices.GetValueOrDefault(fallbackBone, extendedBoneCount);
 
             var bindposes = new List<Matrix4x4>();
             for (var i = 0; i < extendedBoneCount; i++)
@@ -228,7 +234,7 @@ namespace net.nekobako.BoneWeightModifier.Editor
 
             if (fallbackBoneIndex == extendedBoneCount)
             {
-                bones.Add(original.transform);
+                bones.Add(context.ObserveTransformPosition(fallbackBone));
                 bindposes.Add(Matrix4x4.identity);
             }
 
