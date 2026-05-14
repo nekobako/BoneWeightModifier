@@ -17,6 +17,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - The preview was not updating when the bones array or root bone was changed.
 - The bindposes for vertices without weights did not take the root bone into account.
 - Unintended bindposes could be assigned when the number of bones mismatches between the renderer and the mesh.
+- Suppress warnings with the latest version of NDMF.
 
 ### Security
 

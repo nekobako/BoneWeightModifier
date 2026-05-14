@@ -28,7 +28,7 @@ namespace net.nekobako.BoneWeightModifier.Editor
             return context.GetComponentsByType<BoneWeightModifier>()
                 .Where(x => context.Observe(x, y => y.Renderer) && context.GetSharedMesh(x.Renderer))
                 .GroupBy(x => x.Renderer)
-                .Select(x => RenderGroup.For(x.Key).WithData(x.ToArray()))
+                .Select(x => RenderGroup.For(x.Key).WithData(x.ToArray(), Enumerable.SequenceEqual))
                 .ToImmutableList();
         }
 
