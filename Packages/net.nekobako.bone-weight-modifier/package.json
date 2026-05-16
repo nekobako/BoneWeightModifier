@@ -1,6 +1,6 @@
 {
   "name": "net.nekobako.bone-weight-modifier",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "displayName": "Bone Weight Modifier",
   "description": "A non-destructive tool to add and edit bone weights for VRChat avatars",
   "unity": "2022.3",
@@ -9,7 +9,7 @@
     "url": "https://nekobako.net"
   },
   "license": "MIT",
-  "url": "https://github.com/nekobako/BoneWeightModifier/releases/download/1.2.1/net.nekobako.bone-weight-modifier-1.2.1.zip",
+  "url": "https://github.com/nekobako/BoneWeightModifier/releases/download/1.2.2/net.nekobako.bone-weight-modifier-1.2.2.zip",
   "vpmDependencies": {
     "nadena.dev.ndmf": ">=1.13.0"
   }
