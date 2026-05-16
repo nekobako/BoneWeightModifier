@@ -26,9 +26,7 @@ namespace net.nekobako.BoneWeightModifier.Editor
         public ImmutableList<RenderGroup> GetTargetGroups(ComputeContext context)
         {
             return context.GetComponentsByType<BoneWeightModifier>()
-                .Where(x =>
-                    context.Observe(x, y => y.Renderer) && x.Renderer is MeshRenderer && context.TryGetComponent<MeshFilter>(x.Renderer, out var meshFilter) && context.Observe(meshFilter, y => y.sharedMesh) ||
-                    context.Observe(x, y => y.Renderer) && x.Renderer is SkinnedMeshRenderer skinnedMeshRenderer && context.Observe(skinnedMeshRenderer, y => y.sharedMesh))
+                .Where(x => context.Observe(x, y => y.Renderer) && context.GetSharedMesh(x.Renderer))
                 .GroupBy(x => x.Renderer)
                 .Select(x => RenderGroup.For(x.Key).WithData(x.ToArray()))
                 .ToImmutableList();
@@ -45,10 +43,12 @@ namespace net.nekobako.BoneWeightModifier.Editor
         {
             private const string k_MeshContextDescription = "BoneWeightModifierPreview.Node.MeshContext";
 
+            private readonly ComputeContext m_MeshContext = null;
+            private readonly Transform[] m_MeshContextBones = null;
+            private readonly Transform m_MeshContextRootBone = null;
             private readonly BoneWeightModifier[] m_Modifiers = null;
             private readonly Mesh m_Mesh = null;
             private readonly Transform[] m_Bones = null;
-            private readonly ComputeContext m_MeshContext = null;
 
             public RenderAspects WhatChanged { get; private set; } = RenderAspects.Mesh;
 
@@ -56,26 +56,24 @@ namespace net.nekobako.BoneWeightModifier.Editor
             {
                 var (original, proxy) = pairs.Single();
                 m_MeshContext = new(k_MeshContextDescription);
+                m_MeshContextBones = RendererUtils.GetBones(proxy);
+                m_MeshContextRootBone = RendererUtils.GetRootBone(proxy);
                 BoneWeightModifierProcessor.Process(original, proxy, modifiers, m_MeshContext);
 
                 m_Modifiers = modifiers;
-                switch (proxy)
-                {
-                    case MeshRenderer when proxy.TryGetComponent<MeshFilter>(out var meshFilter):
-                        m_Mesh = meshFilter.sharedMesh;
-                        break;
-                    case SkinnedMeshRenderer skinnedMeshRenderer:
-                        m_Mesh = skinnedMeshRenderer.sharedMesh;
-                        m_Bones = skinnedMeshRenderer.bones;
-                        break;
-                }
+                m_Mesh = RendererUtils.GetSharedMesh(proxy);
+                m_Bones = RendererUtils.GetBones(proxy);
 
                 m_MeshContext.Invalidates(context);
             }
 
             public Task<IRenderFilterNode> Refresh(IEnumerable<(Renderer, Renderer)> pairs, ComputeContext context, RenderAspects aspects)
             {
-                if (aspects.HasFlag(RenderAspects.Mesh) || m_MeshContext.IsInvalidated)
+                var (_, proxy) = pairs.Single();
+                if (m_MeshContext.IsInvalidated ||
+                    aspects.HasFlag(RenderAspects.Mesh) ||
+                    aspects.HasFlag(RenderAspects.Shapes) && RendererUtils.GetRootBone(proxy) != m_MeshContextRootBone ||
+                    aspects.HasFlag(RenderAspects.Shapes) && !RendererUtils.GetBones(proxy).SequenceEqual(m_MeshContextBones))
                 {
                     // Returning null here forcibly passes RenderAspects.Everything to Refresh() of downstream nodes
                     // return Task.FromResult<IRenderFilterNode>(null);
@@ -93,16 +91,8 @@ namespace net.nekobako.BoneWeightModifier.Editor
 
             public void OnFrame(Renderer original, Renderer proxy)
             {
-                switch (proxy)
-                {
-                    case MeshRenderer when proxy.TryGetComponent<MeshFilter>(out var meshFilter):
-                        meshFilter.sharedMesh = m_Mesh;
-                        break;
-                    case SkinnedMeshRenderer skinnedMeshRenderer:
-                        skinnedMeshRenderer.sharedMesh = m_Mesh;
-                        skinnedMeshRenderer.bones = m_Bones;
-                        break;
-                }
+                RendererUtils.SetSharedMesh(proxy, m_Mesh);
+                RendererUtils.SetBones(proxy, m_Bones);
             }
 
             public void Dispose()

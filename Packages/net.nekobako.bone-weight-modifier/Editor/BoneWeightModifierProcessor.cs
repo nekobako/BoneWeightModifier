@@ -67,18 +67,9 @@ namespace net.nekobako.BoneWeightModifier.Editor
                     (x, y) => (bone: context.Observe(x, z => z.Bone) ? x.Bone : x.transform, weight: y))
                 .ToArray();
 
-            var mesh = Object.Instantiate(proxy switch
-            {
-                MeshRenderer when proxy.TryGetComponent<MeshFilter>(out var meshFilter) => meshFilter.sharedMesh,
-                SkinnedMeshRenderer skinnedMeshRenderer => skinnedMeshRenderer.sharedMesh,
-                _ => null,
-            });
+            var mesh = Object.Instantiate(RendererUtils.GetSharedMesh(proxy));
 
-            var bones = proxy switch
-            {
-                SkinnedMeshRenderer skinnedMeshRenderer => skinnedMeshRenderer.bones.ToList(),
-                _ => new(),
-            };
+            var bones = new List<Transform>(RendererUtils.GetBones(proxy));
             var existingBoneCount = bones.Count;
             bones.AddRange(weights
                 .Select(x => x.bone)
@@ -91,11 +82,8 @@ namespace net.nekobako.BoneWeightModifier.Editor
                 .GroupBy(x => x.bone)
                 .ToDictionary(x => x.Key, x => x.First().index);
 
-            var fallbackBone = proxy switch
-            {
-                SkinnedMeshRenderer skinnedMeshRenderer when skinnedMeshRenderer.rootBone => skinnedMeshRenderer.rootBone,
-                _ => original.transform,
-            };
+            var rootBone = RendererUtils.GetRootBone(proxy);
+            var fallbackBone = rootBone ? rootBone : original.transform;
             var fallbackBoneIndex = boneIndices.GetValueOrDefault(fallbackBone, extendedBoneCount);
 
             var bindposes = new List<Matrix4x4>();

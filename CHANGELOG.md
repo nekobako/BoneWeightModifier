@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Removed
 
 ### Fixed
+- The preview was not updating when the bones array or root bone was changed.
 
 ### Security
 
