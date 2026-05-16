@@ -101,9 +101,11 @@ namespace net.nekobako.BoneWeightModifier.Editor
                             {
                                 context.ObserveTransformPosition(bone);
                             }
+                            var origin = mesh.bindposeCount == 0 && rootBone ? rootBone : original.transform;
+                            var originToWorld = context.ObserveTransformPosition(origin).localToWorldMatrix;
                             var worldToRoot = context.ObserveTransformPosition(root.transform).worldToLocalMatrix;
-                            var rendererToWorld = context.ObserveTransformPosition(original.transform).localToWorldMatrix;
-                            bindposes.Add(context.Observe(binder, x => x.Bindpose) * worldToRoot * rendererToWorld);
+                            var rootToBone = context.Observe(binder, x => x.Bindpose);
+                            bindposes.Add(rootToBone * worldToRoot * originToWorld);
                             continue;
                         }
                     }
@@ -119,9 +121,10 @@ namespace net.nekobako.BoneWeightModifier.Editor
 
                 if (bone)
                 {
+                    var origin = mesh.bindposeCount == 0 && rootBone ? rootBone : original.transform;
+                    var originToWorld = context.ObserveTransformPosition(origin).localToWorldMatrix;
                     var worldToBone = context.ObserveTransformPosition(bone).worldToLocalMatrix;
-                    var rendererToWorld = context.ObserveTransformPosition(original.transform).localToWorldMatrix;
-                    bindposes.Add(worldToBone * rendererToWorld);
+                    bindposes.Add(worldToBone * originToWorld);
                 }
                 else
                 {

@@ -15,6 +15,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Fixed
 - The preview was not updating when the bones array or root bone was changed.
+- The bindposes for vertices without weights did not take the root bone into account.
 
 ### Security
 
