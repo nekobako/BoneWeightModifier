@@ -110,13 +110,10 @@ namespace net.nekobako.BoneWeightModifier.Editor
                         }
                     }
                 }
-                else
+                else if (i < existingBoneCount)
                 {
-                    if (i < existingBoneCount && i < mesh.bindposes.Length)
-                    {
-                        bindposes.Add(mesh.bindposes[i]);
-                        continue;
-                    }
+                    bindposes.Add(i < mesh.bindposeCount ? mesh.bindposes[i] : Matrix4x4.identity);
+                    continue;
                 }
 
                 if (bone)
