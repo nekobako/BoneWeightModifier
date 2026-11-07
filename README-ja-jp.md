@@ -20,4 +20,4 @@ VRChat アバターのための非破壊ボーンウェイト追加/編集ツー
 ボーンを設定しない場合、コンポーネントがアタッチされているオブジェクトが対象となります。
 4. ボーンウェイトの定義を追加、設定します。
 
-詳しくは [ドキュメント](https://bone-weight-modifier.nekobako.net) を参照してください。
+詳しくは [ドキュメント](https://bone-weight-modifier.nekobako.net/ja-jp/) を参照してください。
